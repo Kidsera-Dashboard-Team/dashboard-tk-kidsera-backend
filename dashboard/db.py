@@ -85,6 +85,16 @@ def get_ruangan(filter = {}):
     collection = get_collection('ruangan')
     return collection.find_one(filter)
 
+def join_ruangan():
+    collection = get_collection('ruangan')
+    pipeline = [ {'$lookup':{
+        "from" : "sarpras",
+        "localField":"_id",
+        "foreignField":"id_ruang",
+        "as":"sarpras"
+    }}]
+    return collection.aggregate(pipeline)
+
 #for sarpras
 def get_allsarpras(filter={}):
     collection = get_collection('sarpras')
