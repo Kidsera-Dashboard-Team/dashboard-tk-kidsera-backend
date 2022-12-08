@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask_restful import Api, Resource
 from bson.json_util import dumps
 from bson.objectid import ObjectId
-from .db import get_ruangan, get_allsarpras, insert_sarpras, get_user, get_sarpras, update_sarpras, delete_sarpras
+from .db import get_ruangan, get_allsarpras, insert_sarpras, get_user, get_sarpras, update_sarpras, delete_sarpras, join_ruangan
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity, get_jwt
 import json
 
@@ -79,3 +79,10 @@ class SarprasDetail(Resource):
             return{"success":False, "msg":"only admin can perform this action"}
 
 api.add_resource(SarprasDetail,"/API/sarpras/<sarpras_id>")
+
+class Allsarpras(Resource):
+    def get(self):
+        ruangans = join_ruangan()
+        return json.loads(dumps(ruangans))
+
+api.add_resource(Allsarpras,"/sarpras/")
