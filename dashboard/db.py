@@ -138,6 +138,10 @@ def get_sarpras(filter):
     collection = get_collection('sarpras')
     return collection.find_one(filter)
 
+# for rapor
+def insert_rapor(data):
+    collection = get_collection('rapor')
+    collection.insert_one(data)
 
 # for token
 def get_blockedtoken(filter = {}):
