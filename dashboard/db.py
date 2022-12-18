@@ -139,10 +139,14 @@ def get_sarpras(filter):
     return collection.find_one(filter)
 
 # for rapor
+
+def insert_rapor(data):
+    collection = get_collection('rapor')
+    collection.insert_one(data)
+
 def get_rapor(filter = {}):
     collection = get_collection('rapor')
     collection.find(filter)
-
 
 def update_rapor(filter,newvalues):
     collection = get_collection('rapor')

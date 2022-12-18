@@ -4,6 +4,7 @@ from flask import Blueprint, request
 from flask_restful import Api, Resource
 from flask_jwt_extended import *
 from bson.objectid import ObjectId
+
 from .db import insert_rapor, update_rapor, get_rapor, get_student
 
 bp = Blueprint('rapor', __name__)
@@ -11,6 +12,7 @@ api = Api(bp)
 
 class Rapor(Resource):
     @jwt_required()
+
     def get(self, student_id):
         ObjInstance = ObjectId(student_id)
         student = get_student({"_id":ObjInstance})

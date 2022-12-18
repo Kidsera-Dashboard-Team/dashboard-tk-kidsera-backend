@@ -28,6 +28,8 @@ class Guru_list(Resource):
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
                 'pendidikan_terakhir':req.get('pendidikan_terakhir'),
+                'tahun_ajaran': req.get('tahun_ajaran'),
+                'kelas_mengajar': req.get('kelas_mengajar'),
                 'status':'guru'
             }
             insert_tendik(data)
@@ -63,6 +65,8 @@ class Tendik(Resource):
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
                 'pendidikan_terakhir':req.get('pendidikan_terakhir'),
+                'tahun_ajaran': req.get('tahun_ajaran'),
+                'kelas_mengajar': req.get('kelas_mengajar'),
                 'status':req.get('status')
             }}
             update_tendik(filter, newvalues)
@@ -103,6 +107,8 @@ class NonGuru_list(Resource):
                 'no_hp':req.get('no_hp'),
                 'email':req.get('email'),
                 'pendidikan_terakhir':req.get('pendidikan_terakhir'),
+                'tahun_ajaran': req.get('tahun_ajaran'),
+                'kelas_mengajar': req.get('kelas_mengajar'),
                 'status':'non-guru'
             }
             insert_tendik(data)
