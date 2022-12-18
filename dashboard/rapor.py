@@ -14,9 +14,12 @@ class Rapor(Resource):
     def post(self, student_id):
         req = request.form
         id = ObjectId(student_id)
+        student = get_student(id)
 
         data = {
             "student_id" : id,
+            "tahun_ajaran" : student['tahun_ajaran'],
+            "semester" : req['semester'],
             "nilai" : 
             [   
                 # PENILAIAN CEKLIS (dengan radio button)
