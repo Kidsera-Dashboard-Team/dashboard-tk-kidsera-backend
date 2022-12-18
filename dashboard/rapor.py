@@ -4,22 +4,34 @@ from flask import Blueprint, request
 from flask_restful import Api, Resource
 from flask_jwt_extended import *
 from bson.objectid import ObjectId
-from .db import insert_rapor
+
+from .db import insert_rapor, update_rapor, get_rapor, get_student
 
 bp = Blueprint('rapor', __name__)
 api = Api(bp)
 
 class Rapor(Resource):
     @jwt_required()
-    def post(self, student_id):
-        req = request.form
-        id = ObjectId(student_id)
-        student = get_student(id)
 
-        data = {
-            "student_id" : id,
-            "tahun_ajaran" : student['tahun_ajaran'],
-            "semester" : req['semester'],
+    def get(self, student_id):
+        ObjInstance = ObjectId(student_id)
+        student = get_student({"_id":ObjInstance})
+        rapor = get_rapor({"student_id"})
+        return {"nama_peserta_didik":student["nama"],
+        "rapor":json.loads(dumps(rapor))}
+
+    
+
+
+api.add_resource(Rapor, "/API/rapor/<student_id>")
+
+class RaporDetail(Resource):
+    @jwt_required()
+    def put(self, rapor_id):
+        ObjInstance = ObjectId(rapor_id)
+        filter = {"_id":ObjInstance}
+        req = request.form
+        newvalues = {"$set":{
             "nilai" : 
             [   
                 # PENILAIAN CEKLIS (dengan radio button)
@@ -188,14 +200,9 @@ class Rapor(Resource):
                     }
                 ]
             ]
-        }
+        }}
 
-        insert_rapor(data)
-        return {"Success" : True, "msg" : "rapor successfully added", "inserted_data" : json.loads(dumps(data))}
+        update_rapor(filter,newvalues)
+        return {"Success" : True, "msg" : "rapor successfully updated"}
 
-        # berikut contoh cara mengakses elemen dalam data rapor
-        # query = data["nilai"][0][0]['a']
-        # alur variabel query :
-        # NILAI MORAL DAN AGAMA -> NILAI AGAMA -> sub penilaian pertama ("mengenal agama yang dianut") -> mengambil value
-
-api.add_resource(Rapor, "/API/rapor/<student_id>")
+api.add_resource(RaporDetail, "/API/rapor/detail/<rapor_id>")
