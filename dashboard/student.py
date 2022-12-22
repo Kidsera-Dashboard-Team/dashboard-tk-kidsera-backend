@@ -12,7 +12,7 @@ bp = Blueprint('students',__name__)
 api = Api(bp)
 
 class Students(Resource):
-    @jwt_required()
+#     @jwt_required()
     def get(self):
         data = getAll_student()
         return json.loads(dumps(data))
