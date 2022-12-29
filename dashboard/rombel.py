@@ -57,8 +57,11 @@ api.add_resource(Rombel, "/API/rombel/<rombel_id>")
 class Rombels(Resource):
     # @jwt_required()
     def get(self):
-        data = get_rombels()
-        return json.loads(dumps(data))
+        data = get_tahun_ajaran()
+        datas = [x['tahun_ajaran'] for x in data]
+        datas1 = list(set(datas))
+        datas1.sort()
+        return json.loads(dumps(datas1)) 
 
     # @jwt_required()
     def post(self):
