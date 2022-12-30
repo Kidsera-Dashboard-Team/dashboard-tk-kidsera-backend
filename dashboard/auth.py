@@ -44,7 +44,7 @@ class Login(Resource):
         if data is not None:
             if data['password']==password:
                 access_token = create_access_token(identity=username)
-                return {'success':True,'access_token': access_token}
+                return {'success':True,'access_token': access_token, 'is_admin': data['is_admin'], 'username' : data['username']}
             else:
                 return {'success':False, 'message':'wrong password or username'}
         else:
