@@ -15,14 +15,15 @@ class Register(Resource):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
         if userDetail['is_admin']:
-            email = request.form['email']
-            username = request.form['username']
+            req = request.get_json()
+            email = req['email']
+            username = req['username']
             if get_user({'email':email}) == None and get_user({'username': username}) == None:
                 data = {'email' : email,
                 'username' : username,
-                'password' : md5(request.form['password'].encode('utf-8')).hexdigest(),
-                'first_name' : request.form['fname'],
-                'last_name' : request.form['lname'],
+                'password' : md5(req['password'].encode('utf-8')).hexdigest(),
+                'first_name' : req['fname'],
+                'last_name' : req['lname'],
                 'is_admin': False}
                 insert_user(data)
                 return {'success':True}
@@ -38,8 +39,9 @@ api.add_resource(Register,'/API/auth/register')
 
 class Login(Resource):
     def post(self):
-        username = request.form['username']
-        password = md5(request.form['password'].encode('utf-8')).hexdigest()
+        req = request.get_json()
+        username = req['username']
+        password = md5(req['password'].encode('utf-8')).hexdigest()
         data = get_user({'username':username})
         if data is not None:
             if data['password']==password:
@@ -68,17 +70,18 @@ api.add_resource(Logout,'/API/auth/logout')
 class CreateAdmin(Resource):
     @jwt_required()
     def post(self):
+        req = request.get_json()
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
         if userDetail['is_admin']:
-            email = request.form['email']
-            username = request.form['username']
+            email = req['email']
+            username = req['username']
             if get_user({'email':email}) == None and get_user({'username': username}) == None:
                 data = {'email' : email,
                 'username' : username,
-                'password' : md5(request.form['password'].encode('utf-8')).hexdigest(),
-                'first_name' : request.form['fname'],
-                'last_name' : request.form['lname'],
+                'password' : md5(req['password'].encode('utf-8')).hexdigest(),
+                'first_name' : req['fname'],
+                'last_name' : req['lname'],
                 'is_admin': True}
                 insert_user(data)
                 return {'success':True}

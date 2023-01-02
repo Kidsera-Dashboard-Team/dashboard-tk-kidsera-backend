@@ -19,17 +19,17 @@ class Guru_list(Resource):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
         if userDetail['is_admin']:
-            req = request.form
+            req = request.get_json()
             data = {
-                'nama':req.get('nama'),
-                'jenis_kelamin':req.get('jenis_kelamin'),
-                'ttl':req.get('ttl'),
-                'alamat':req.get('alamat'),
-                'no_hp':req.get('no_hp'),
-                'email':req.get('email'),
-                'pendidikan_terakhir':req.get('pendidikan_terakhir'),
-                'tahun_ajaran': req.get('tahun_ajaran'),
-                'kelas_mengajar': req.get('kelas_mengajar'),
+                'nama':req['nama'],
+                'jenis_kelamin':req['jenis_kelamin'],
+                'ttl':req['ttl'],
+                'alamat':req['alamat'],
+                'no_hp':req['no_hp'],
+                'email':req['email'],
+                'pendidikan_terakhir':req['pendidikan_terakhir'],
+                'tahun_ajaran': req['tahun_ajaran'],
+                'kelas_mengajar': req['kelas_mengajar'],
                 'status':'guru'
             }
             insert_tendik(data)
@@ -56,18 +56,18 @@ class Tendik(Resource):
         if userDetail['is_admin']:
             ObjInstance = ObjectId(tendik_id)
             filter = {'_id':ObjInstance}
-            req = request.form
+            req = request.get_json()
             newvalues = {"$set":{
-                'nama':req.get('nama'),
-                'jenis_kelamin':req.get('jenis_kelamin'),
-                'ttl':req.get('ttl'),
-                'alamat':req.get('alamat'),
-                'no_hp':req.get('no_hp'),
-                'email':req.get('email'),
-                'pendidikan_terakhir':req.get('pendidikan_terakhir'),
-                'tahun_ajaran': req.get('tahun_ajaran'),
-                'kelas_mengajar': req.get('kelas_mengajar'),
-                'status':req.get('status')
+                'nama':req['nama'],
+                'jenis_kelamin':req['jenis_kelamin'],
+                'ttl':req['ttl'],
+                'alamat':req['alamat'],
+                'no_hp':req['no_hp'],
+                'email':req['email'],
+                'pendidikan_terakhir':req['pendidikan_terakhir'],
+                'tahun_ajaran': req['tahun_ajaran'],
+                'kelas_mengajar': req['kelas_mengajar'],
+                'status':req['status']
             }}
             update_tendik(filter, newvalues)
             return{"success":True}
@@ -98,17 +98,17 @@ class NonGuru_list(Resource):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
         if userDetail['is_admin']:
-            req = request.form
+            req = request.get_json()
             data = {
-                'nama':req.get('nama'),
-                'jenis_kelamin':req.get('jenis_kelamin'),
-                'ttl':req.get('ttl'),
-                'alamat':req.get('alamat'),
-                'no_hp':req.get('no_hp'),
-                'email':req.get('email'),
-                'pendidikan_terakhir':req.get('pendidikan_terakhir'),
-                'tahun_ajaran': req.get('tahun_ajaran'),
-                'kelas_mengajar': req.get('kelas_mengajar'),
+                'nama':req['nama'],
+                'jenis_kelamin':req['jenis_kelamin'],
+                'ttl':req['ttl'],
+                'alamat':req['alamat'],
+                'no_hp':req['no_hp'],
+                'email':req['email'],
+                'pendidikan_terakhir':req['pendidikan_terakhir'],
+                'tahun_ajaran': req['tahun_ajaran'],
+                'kelas_mengajar': req['kelas_mengajar'],
                 'status':'non-guru'
             }
             insert_tendik(data)
