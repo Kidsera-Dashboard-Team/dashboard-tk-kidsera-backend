@@ -24,11 +24,11 @@ class Sarpras(Resource):
         userDetail = get_user({"username":user})
         if userDetail['is_admin']:
             ObjInstance = ObjectId(ruangan_id)
-            req = request.form
+            req = request.get_json()
             data = {
-                'nama':req.get('nama'),
-                'jenis':req.get('jenis'),
-                'jumlah':int(req.get('jumlah')),
+                'nama':req['nama'],
+                'jenis':req['jenis'],
+                'jumlah':int(req['jumlah']),
                 'id_ruang':ObjInstance
             }
             insert_sarpras(data)
@@ -55,11 +55,11 @@ class SarprasDetail(Resource):
         if userDetail['is_admin']:
             ObjInstance = ObjectId(sarpras_id)
             filter = {"_id":ObjInstance}
-            req = request.form
+            req = request.get_json()
             newvalues ={"$set":{
-                'nama':req.get('nama'),
-                'jenis':req.get('jenis'),
-                'jumlah':int(req.get('jumlah')),
+                'nama':req['nama'],
+                'jenis':req['jenis'],
+                'jumlah':int(req['jumlah']),
             }}
             update_sarpras(filter,newvalues)
             return{"success":True}
@@ -78,4 +78,4 @@ class SarprasDetail(Resource):
         else:
             return{"success":False, "msg":"only admin can perform this action"}
 
-api.add_resource(SarprasDetail,"/API/sarpras/<sarpras_id>")
+api.add_resource(SarprasDetail,"/API/sarpras_detail/<sarpras_id>")
