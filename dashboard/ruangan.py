@@ -10,6 +10,7 @@ bp = Blueprint("ruangan",__name__)
 api = Api(bp)
 
 class RuanganList(Resource):
+    @jwt_required()
     def get(self):
         data = get_ruangans()
         return json.loads(dumps(data))

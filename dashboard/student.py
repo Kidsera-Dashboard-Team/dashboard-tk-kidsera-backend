@@ -12,12 +12,12 @@ bp = Blueprint('students',__name__)
 api = Api(bp)
 
 class Students(Resource):
-#     @jwt_required()
+    @jwt_required()
     def get(self):
         data = getAll_student()
         return json.loads(dumps(data))
     
-    # @jwt_required()
+    @jwt_required()
     def post(self):
         # email = get_jwt_identity()
         # userDetail = get_user({"email":email})
@@ -54,7 +54,7 @@ class Students(Resource):
 api.add_resource(Students, '/API/students')
 
 class Student(Resource):
-    # @jwt_required()
+    @jwt_required()
     def get(self, student_id):
         id = student_id
         ObjInstance = ObjectId(id)

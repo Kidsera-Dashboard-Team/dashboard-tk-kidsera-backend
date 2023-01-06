@@ -10,6 +10,7 @@ bp = Blueprint('tendik', __name__)
 api = Api(bp)
 
 class Guru_list(Resource):
+    @jwt_required()
     def get(self):
         data = get_tendiks({'status':'guru'})
         return json.loads(dumps(data))
@@ -43,6 +44,7 @@ class Guru_list(Resource):
 api.add_resource(Guru_list,'/API/tendik/guru')
 
 class Tendik(Resource):
+    @jwt_required()
     def get(self, tendik_id):
         ObjInstance = ObjectId(tendik_id)
         filter = {'_id':ObjInstance}
@@ -89,6 +91,7 @@ class Tendik(Resource):
 api.add_resource(Tendik,'/API/tendik/<tendik_id>')
 
 class NonGuru_list(Resource):
+    @jwt_required()
     def get(self):
         data = get_tendiks({'status':'non-guru'})
         return json.loads(dumps(data))

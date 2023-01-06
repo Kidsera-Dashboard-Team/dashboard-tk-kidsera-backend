@@ -10,6 +10,7 @@ bp = Blueprint("sarpras", __name__)
 api = Api(bp)
 
 class Sarpras(Resource):
+    @jwt_required()
     def get(self, ruangan_id):
         ObjInstance = ObjectId(ruangan_id)
         ruang = get_ruangan({'_id':ObjInstance})
@@ -42,6 +43,7 @@ class Sarpras(Resource):
 api.add_resource(Sarpras,"/API/sarpras/<ruangan_id>")
 
 class SarprasDetail(Resource):
+    @jwt_required()
     def get(self, sarpras_id):
         ObjInstance = ObjectId(sarpras_id)
         filter = {"_id":ObjInstance}
