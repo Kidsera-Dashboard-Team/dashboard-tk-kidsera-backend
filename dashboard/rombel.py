@@ -55,7 +55,7 @@ class Rombel(Resource):
 api.add_resource(Rombel, "/API/rombel/<rombel_id>")
 
 class Rombels(Resource):
-    # @jwt_required()
+    @jwt_required()
     def get(self):
         data = get_tahun_ajaran()
         datas = [x['tahun_ajaran'] for x in data]
@@ -63,7 +63,7 @@ class Rombels(Resource):
         datas1.sort()
         return json.loads(dumps(datas1)) 
 
-    # @jwt_required()
+    @jwt_required()
     def post(self):
         # email = get_jwt_identity()
         # userDetail = get_user({"email":email})

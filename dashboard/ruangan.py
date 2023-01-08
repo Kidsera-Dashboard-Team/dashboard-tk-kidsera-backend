@@ -10,6 +10,7 @@ bp = Blueprint("ruangan",__name__)
 api = Api(bp)
 
 class RuanganList(Resource):
+    @jwt_required()
     def get(self):
         data = get_ruangans()
         return json.loads(dumps(data))
@@ -19,9 +20,9 @@ class RuanganList(Resource):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
         if userDetail['is_admin']:
-            req = request.form
+            req = request.get_json()
             data = {
-                "nama_ruangan":req.get('nama_ruangan')
+                "nama_ruangan":req['nama_ruangan']
             }
             insert_ruangan(data)
             return{"success":True}

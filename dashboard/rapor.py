@@ -218,7 +218,8 @@ class Rapor(Resource):
 
         insert_rapor(data)
         return {"Success" : True, "msg" : "rapor successfully added", "inserted_data" : json.loads(dumps(data))}
-    
+
+    @jwt_required()
     def get(self, student_id):
         ObjInstance = ObjectId(student_id)
         student = get_student({"_id":ObjInstance})

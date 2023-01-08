@@ -52,9 +52,9 @@ def delete_student(filter = {}):
     return collection.delete_one(filter)
 
 # for tendik
-def get_tendiks():
+def get_tendiks(filter):
     collection = get_collection('tenaga_pendidik')
-    return collection.find()
+    return collection.find(filter)
 
 def insert_tendik(data):
     collection = get_collection('tenaga_pendidik')
