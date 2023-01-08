@@ -64,15 +64,15 @@ class Student(Resource):
     
     @jwt_required()
     def put(self, student_id):
-        email = get_jwt_identity()
-        userDetail = get_user({"email":email})
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
         if userDetail['is_admin']:
             ObjInstance = ObjectId(student_id)
             filter = {'_id':ObjInstance}
             if (get_student(filter) is None):
                 return {"message":"ID not valid"}
             else:
-                req = request.form
+                req = request.get_json()
                 newVal = {
                     "$set":{
                         'nama' : req['nama'],
@@ -106,8 +106,8 @@ class Student(Resource):
 
     @jwt_required()
     def delete(self, student_id):
-        email = get_jwt_identity()
-        userDetail = get_user({"email":email})
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
         if userDetail['is_admin']:
             ObjInstance = ObjectId(student_id)
             filter = {'_id':ObjInstance}

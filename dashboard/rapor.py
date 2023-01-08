@@ -11,7 +11,7 @@ bp = Blueprint('rapor', __name__)
 api = Api(bp)
 
 class Rapor(Resource):
-    # @jwt_required()
+    @jwt_required()
     def post(self, student_id):
         req = request.get_json()
         id = ObjectId(student_id)
@@ -238,7 +238,7 @@ class RaporDetail(Resource):
         data =  {"nama_peserta_didik":student, "rapor":json.loads(dumps(rapor))}
         return json.loads(dumps(data)) 
 
-    # @jwt_required()
+    @jwt_required()
     def put(self, student_id, periode, semester):
         ObjInstance = ObjectId(student_id)
         filter = {"student_id":ObjInstance, "periode":periode, "semester":semester}
