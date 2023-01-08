@@ -1,2 +1,3 @@
 instance/settings.cfg
 venv
+dashboard/__pycache__
