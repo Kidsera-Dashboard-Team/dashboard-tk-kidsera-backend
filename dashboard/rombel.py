@@ -30,8 +30,8 @@ class Rombel(Resource):
 
     @jwt_required()
     def put(self, rombel_id):
-        email = get_jwt_identity()
-        userDetail = get_user({"email":email})
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
         if userDetail['is_admin']:
             id = ObjectId(rombel_id)
             filter = {"_id":id}
@@ -39,7 +39,7 @@ class Rombel(Resource):
             if get_rombel(filter) is None: 
                 return {"Success" : False, "msg" : "Id not valid"}
             else:
-                req = request.form
+                req = request.get_json()
                 new_val = {
                     "$set":{
                         "tahun_ajaran" : req['tahun_ajaran'],
@@ -107,7 +107,7 @@ class Rombelget(Resource):
         if get_rombel(filter) is None: 
             return {"Success" : False, "msg" : "Id not valid"}
         else:
-            req = request.form
+            req = request.get_json()
             new_val = {
                 "$set":{
                     "tahun_ajaran" : req['tahun_ajaran'],
