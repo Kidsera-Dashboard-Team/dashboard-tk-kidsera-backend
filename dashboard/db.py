@@ -51,6 +51,8 @@ def delete_student(filter = {}):
     collection = get_collection('students')
     return collection.delete_one(filter)
 
+
+
 # for tendik
 def get_tendiks(filter):
     collection = get_collection('tenaga_pendidik')
@@ -155,6 +157,11 @@ def get_rapor(filter = {}):
 def update_rapor(filter,newvalues):
     collection = get_collection('rapor')
     collection.update_one(filter, newvalues)
+
+#for info
+def get_info():
+    collection = get_collection('info')
+    return collection.find()
 
 # for token
 def get_blockedtoken(filter = {}):

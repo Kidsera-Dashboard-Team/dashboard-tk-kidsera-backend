@@ -30,7 +30,7 @@ def create_app():
     db.init_app(app)
     
     
-    from . import auth, student, tendik, ruangan, sarpras, rombel, rapor
+    from . import auth, student, tendik, ruangan, sarpras, rombel, rapor, home
     app.register_blueprint(auth.bp) 
     app.register_blueprint(student.bp)
     app.register_blueprint(tendik.bp)
@@ -38,5 +38,6 @@ def create_app():
     app.register_blueprint(sarpras.bp)
     app.register_blueprint(rombel.bp)    
     app.register_blueprint(rapor.bp)
+    app.register_blueprint(home.bp)
     
     return app
