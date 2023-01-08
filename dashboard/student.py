@@ -22,19 +22,19 @@ class Students(Resource):
         # email = get_jwt_identity()
         # userDetail = get_user({"email":email})
         # if userDetail['is_admin']:
-        req = request.form
+        req = request.get_json()
         data = {
             'nama' : req['nama'],
+            'status' : req['status'],
             'jenis_kelamin' : req['jenis_kelamin'], 
-            'nisn' : req['nisn'], 
+            'tahun_ajaran' : req['tahun_ajaran'],
             'nik' : req['nik'], 
+            'nisn' : req['nisn'], 
             'no_kk' : req['no_kk'], 
             'tingkat_kelas' : req['tingkat_kelas'], 
-            'tahun_ajaran' : req['tahun_ajaran'],
             'tanggal_masuk' :req['tanggal_masuk'],
             'tanggal_lulus' :req['tanggal_lulus'],
             'nomor_induk' : req['nomor_induk'],
-            'status' : req['status'],
             'tinggi_badan' : int(req['tinggi_badan']),
             'berat_badan' : int(req['berat_badan']),
             'lingkar_kepala' : int(req['lingkar_kepala']),

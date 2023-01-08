@@ -11,185 +11,210 @@ bp = Blueprint('rapor', __name__)
 api = Api(bp)
 
 class Rapor(Resource):
-    @jwt_required()
+    # @jwt_required()
     def post(self, student_id):
-        req = request.form
+        req = request.get_json()
         id = ObjectId(student_id)
         student = get_student(id)
-        
-        data = {
-            "student_id" : id,
-            "tahun_ajaran" : student['tahun_ajaran'],
-            "semester" : req['semester'],
-            "nilai" : 
-            [   
-                # PENILAIAN CEKLIS (dengan radio button)
-                # NILAI MORAL DAN AGAMA (0)
-                [
-                    # NILAI AGAMA (0)
-                    { 
-                        'a' : req['0-0-a'],
-                        'b' : req['0-0-b'],
-                        'c' : req['0-0-c'],
-                        'd' : req['0-0-d'],
-                        'e' : req['0-0-e'],
-                    },
+        periode = req['periode']
 
-                    # NILAI MORAL (1)
-                    {
-                        'a' : req['0-1-a'],
-                        'b' : req['0-1-b'],
-                        'c' : req['0-1-c'],
-                    }
-                ],
-
-                # FISIK MOTORIK (1)
-                [ 
-                    # MOTORIK KASAR (0)
-                    {
-                        'a' : req['1-0-a'],
-                        'b' : req['1-0-b'],
-                        'c' : req['1-0-c'],
-                        'd' : req['1-0-d'],
-                    },
-
-                    # MOTORIK HALUS (1)
-                    {
-                        'a' : req['1-1-a'],
-                        'b' : req['1-1-b'],
-                        'c' : req['1-1-c'],
-                        'd' : req['1-1-d'],
-                        'e' : req['1-1-e'],
-                        'f' : req['1-1-f'],
-                        'g': req['1-1-g'],
-                    },
-
-                    # KESEHATAN DAN PERILAKU KESELAMATAN (2)
-                    {
-                        'a' : req['1-2-a'],
-                        'b' : req['1-2-b'],
-                        'c' : req['1-2-c'],
-                    }
-                ],
-
-                # BAHASA (2)
-                [
-                    # RESEPTIF (0)
-                    {
-                        'a' : req['2-0-a'],
-                        'b' : req['2-0-b'],
-                        'c' : req['2-0-c'],
-                        'd' : req['2-0-d'],
-                    },
-
-                    # EKSPRESIF (1)
-                    {
-                        'a' : req['2-1-a'],
-                        'b' : req['2-1-b'],
-                        'c' : req['2-1-c'],
-                        'd' : req['2-1-d'],
-                        'e' : req['2-1-e'],
-                        'f' : req['2-1-f'],
-                        'g' : req['2-1-g'],
-                    },
-
-                    # LITERASI (2)
-                    {
-                        'a' : req['2-2-a'],
-                        'b' : req['2-2-b'],
-                        'c' : req['2-2-c'],
-                        'd' : req['2-2-d'],
-                        'e' : req['2-2-e'],
-                        'f' : req['2-2-f'],
-                    }
-                ],
-
-                # KOGNITIF (3)
-                [
-                    # BELAJAR DAN PEMECAHAN MASALAH (0)
-                    {
-                        'a' : req['3-0-a'],
-                        'b' : req['3-0-b'],
-                        'c' : req['3-0-c'],
-                    },
-
-                    # BERPIKIR LOGIS (1)
-                    {
-                        'a' : req['3-1-a'],
-                        'b' : req['3-1-b'],
-                        'c' : req['3-1-c'],
-                        'd' : req['3-1-d'],
-                        'e' : req['3-1-e'],
-                        'f' : req['3-1-f'],
-                    },
-
-                    # BERPIKIR SIMBOLIK (MATEMATIKA SEDERHANA) (2)
-                    {
-                        'a' : req['3-2-a'],
-                        'b' : req['3-2-b'],
-                        'c' : req['3-2-c'],
-                        'd' : req['3-2-d'],
-                    }
-                ],
-
-                # SOSIAL EMOSIONAL (4)
-                [
-                    # KESADARAN DIRI (0)
-                    {
-                        'a' : req['4-0-a'],
-                        'b' : req['4-0-b'],
-                        'c' : req['4-0-c'],
-                    },
-
-                    # RASA TANGGUNG JAWAB KEPADA DIRI SENDIRI DAN ORANG LAIN (1)
-                    {
-                        'a' : req['4-1-a'],
-                        'b' : req['4-1-b'],
-                        'c' : req['4-1-c'],
-                        'd' : req['4-1-d'],
-                    },
-
-                    #  PERILAKU PROSOSIAL (2)
-                    {
-                        'a' : req['4-2-a'],
-                        'b' : req['4-2-b'],
-                        'c' : req['4-2-c'],
-                        'd' : req['4-2-d'],
-                        'e' : req['4-2-e'],
-                        'f' : req['4-2-f'],
-                        'g' : req['4-2-g'],
-                        'h' : req['4-2-h'],
-                        'i' : req['4-2-i'],
-                    }
-                ],
-
-                # SENI (5)
-                [
-                    # subpenilaian (0)
-                    {
-                        'a' : req['5-0-a'],
-                        'b' : req['5-0-b'],
-                        'c' : req['5-0-c'],
-                        'd' : req['5-0-d'],
-                        'e' : req['5-0-e'],
-                        'f' : req['5-0-f'],
-                    }
-                ],
-
-                # INFORMASI PERKEMBANGAN (dengan textarea) (6)
-                [
-                    # subpenilaian (0)
-                    {
-                        '1' : req['6-0-1'],
-                        '2' : req['6-0-2'],
-                        '3' : req['6-0-3'],
-                        '4' : req['6-0-4'],
-                        '5' : req['6-0-5'],
-                        '6' : req['6-0-6'],
-                    }
+        if periode == "tengah_semester":
+            data = {
+                "student_id" : id,
+                "tahun_ajaran" : student['tahun_ajaran'],
+                "periode" : req['periode'],
+                "semester" : req['semester'],
+                "nilai" : 
+                  [
+                    # subpenilaian 
+                    [
+                        {
+                            'text1' : req['text1'],
+                            'text2' : req['text2'],
+                            'text3' : req['text3'],
+                            'text4' : req['text4'],
+                            'text5' : req['text5'],
+                            'text6' : req['text6'],
+                        }
+                    ]
                 ]
-            ]
-        }
+            }    
+        else:
+            data = {
+                "student_id" : id,
+                "tahun_ajaran" : student['tahun_ajaran'],
+                "periode" : req['periode'],
+                "semester" : req['semester'],
+                
+                "nilai" : 
+                [   
+                    # PENILAIAN CEKLIS (dengan radio button)
+                    # NILAI MORAL DAN AGAMA (a)
+                    [
+                        # NILAI AGAMA (a)
+                        { 
+                            'a' : req['aaa'],
+                            'b' : req['aab'],
+                            'c' : req['aac'],
+                            'd' : req['aad'],
+                            'e' : req['aae'],
+                        },
+
+                        # NILAI MORAL (b)
+                        {
+                            'a' : req['aba'],
+                            'b' : req['abb'],
+                            'c' : req['abc'],
+                        }
+                    ],
+
+                    # FISIK MOTORIK (b)
+                    [ 
+                        # MOTORIK KASAR (a)
+                        {
+                            'a' : req['baa'],
+                            'b' : req['bab'],
+                            'c' : req['bac'],
+                            'd' : req['bad'],
+                        },
+
+                        # MOTORIK HALUS (b)
+                        {
+                            'a' : req['bba'],
+                            'b' : req['bbb'],
+                            'c' : req['bbc'],
+                            'd' : req['bbd'],
+                            'e' : req['bbe'],
+                            'f' : req['bbf'],
+                            'g' : req['bbg'],
+                        },
+
+                        # KESEHATAN DAN PERILAKU KESELAMATAN (c)
+                        {
+                            'a' : req['bca'],
+                            'b' : req['bcb'],
+                            'c' : req['bcc'],
+                        }
+                    ],
+
+                    # BAHASA (c)
+                    [
+                        # RESEPTIF (a)
+                        {
+                            'a' : req['caa'],
+                            'b' : req['cab'],
+                            'c' : req['cac'],
+                            'd' : req['cad'],
+                        },
+
+                        # EKSPRESIF (b)
+                        {
+                            'a' : req['cba'],
+                            'b' : req['cbb'],
+                            'c' : req['cbc'],
+                            'd' : req['cbd'],
+                            'e' : req['cbe'],
+                            'f' : req['cbf'],
+                            'g' : req['cbg'],
+                        },
+
+                        # LITERASI (c)
+                        {
+                            'a' : req['cca'],
+                            'b' : req['ccb'],
+                            'c' : req['ccc'],
+                            'd' : req['ccd'],
+                            'e' : req['cce'],
+                            'f' : req['ccf'],
+                        }
+                    ],
+
+                    # KOGNITIF (3)
+                    [
+                        # BELAJAR DAN PEMECAHAN MASALAH (a)
+                        {
+                            'a' : req['daa'],
+                            'b' : req['dab'],
+                            'c' : req['dac'],
+                        },
+
+                        # BERPIKIR LOGIS (b)
+                        {
+                            'a' : req['dba'],
+                            'b' : req['dbb'],
+                            'c' : req['dbc'],
+                            'd' : req['dbd'],
+                            'e' : req['dbe'],
+                            'f' : req['dbf'],
+                        },
+
+                        # BERPIKIR SIMBOLIK (MATEMATIKA SEDERHANA) (c)
+                        {
+                            'a' : req['dca'],
+                            'b' : req['dcb'],
+                            'c' : req['dcc'],
+                            'd' : req['dcd'],
+                        }
+                    ],
+
+                    # SOSIAL EMOSIONAL (e)
+                    [
+                        # KESADARAN DIRI (a)
+                        {
+                            'a' : req['eaa'],
+                            'b' : req['eab'],
+                            'c' : req['eac'],
+                        },
+
+                        # RASA TANGGUNG JAWAB KEPADA DIRI SENDIRI DAN ORANG LAIN (b)
+                        {
+                            'a' : req['eba'],
+                            'b' : req['ebb'],
+                            'c' : req['ebc'],
+                            'd' : req['ebd'],
+                        },
+
+                        #  PERILAKU PROSOSIAL (c)
+                        {
+                            'a' : req['eca'],
+                            'b' : req['ecb'],
+                            'c' : req['ecc'],
+                            'd' : req['ecd'],
+                            'e' : req['ece'],
+                            'f' : req['ecf'],
+                            'g' : req['ecg'],
+                            'h' : req['ech'],
+                            'i' : req['eci'],
+                        }
+                    ],
+
+                    # SENI (f)
+                    [
+                        # subpenilaian (a)
+                        {
+                            'a' : req['faa'],
+                            'b' : req['fab'],
+                            'c' : req['fac'],
+                            'd' : req['fad'],
+                            'e' : req['fae'],
+                            'f' : req['faf'],
+                        }
+                    ],
+
+                    # INFORMASI PERKEMBANGAN (dengan textarea) (g)
+                    [
+                        # subpenilaian (a)
+                        {
+                            'text1' : req['text1'],
+                            'text2' : req['text2'],
+                            'text3' : req['text3'],
+                            'text4' : req['text4'],
+                            'text5' : req['text5'],
+                            'text6' : req['text6'],
+                        }
+                    ]
+                ]
+            }
 
         insert_rapor(data)
         return {"Success" : True, "msg" : "rapor successfully added", "inserted_data" : json.loads(dumps(data))}
@@ -198,193 +223,217 @@ class Rapor(Resource):
     def get(self, student_id):
         ObjInstance = ObjectId(student_id)
         student = get_student({"_id":ObjInstance})
-        rapor = get_rapor({"student_id"})
-        return {"nama_peserta_didik":student["nama"],
-        "rapor":json.loads(dumps(rapor))}
-
-    
+        rapor = get_rapor({"student_id":ObjInstance})
+        data =  {"nama_peserta_didik":student, "rapor":json.loads(dumps(rapor))}
+        return json.loads(dumps(data)) 
 
 
 api.add_resource(Rapor, "/API/rapor/<student_id>")
 
 class RaporDetail(Resource):
-    @jwt_required()
-    def put(self, rapor_id):
-        ObjInstance = ObjectId(rapor_id)
-        filter = {"_id":ObjInstance}
-        req = request.form
-        newvalues = {"$set":{
-            "nilai" : 
-            [   
-                # PENILAIAN CEKLIS (dengan radio button)
-                # NILAI MORAL DAN AGAMA (0)
-                [
-                    # NILAI AGAMA (0)
-                    { 
-                        'a' : req['0-0-a'],
-                        'b' : req['0-0-b'],
-                        'c' : req['0-0-c'],
-                        'd' : req['0-0-d'],
-                        'e' : req['0-0-e'],
-                    },
+    def get(self, student_id, periode, semester ):
+        ObjInstance = ObjectId(student_id)
+        student = get_student({"_id":ObjInstance})
+        rapor = get_rapor({"student_id":ObjInstance, "periode":periode, "semester":semester})
+        data =  {"nama_peserta_didik":student, "rapor":json.loads(dumps(rapor))}
+        return json.loads(dumps(data)) 
 
-                    # NILAI MORAL (1)
-                    {
-                        'a' : req['0-1-a'],
-                        'b' : req['0-1-b'],
-                        'c' : req['0-1-c'],
-                    }
-                ],
+    # @jwt_required()
+    def put(self, student_id, periode, semester):
+        ObjInstance = ObjectId(student_id)
+        filter = {"student_id":ObjInstance, "periode":periode, "semester":semester}
+        req = request.get_json()
 
-                # FISIK MOTORIK (1)
-                [ 
-                    # MOTORIK KASAR (0)
-                    {
-                        'a' : req['1-0-a'],
-                        'b' : req['1-0-b'],
-                        'c' : req['1-0-c'],
-                        'd' : req['1-0-d'],
-                    },
+        if periode == "tengah_semester":
+            newvalues = {"$set":{
+                "nilai" : 
+                    [    [
+                            {
+                                'text1' : req['text1'],
+                                'text2' : req['text2'],
+                                'text3' : req['text3'],
+                                'text4' : req['text4'],
+                                'text5' : req['text5'],
+                                'text6' : req['text6'],
+                            }
+                        ]
+                    ]
+                }
+            }
+        else:
+            newvalues = {"$set":{
+                "nilai" : 
+                    [   
+                        # PENILAIAN CEKLIS (dengan radio button)
+                        # NILAI MORAL DAN AGAMA (a)
+                        [
+                            # NILAI AGAMA (a)
+                            { 
+                                'a' : req['aaa'],
+                                'b' : req['aab'],
+                                'c' : req['aac'],
+                                'd' : req['aad'],
+                                'e' : req['aae'],
+                            },
 
-                    # MOTORIK HALUS (1)
-                    {
-                        'a' : req['1-1-a'],
-                        'b' : req['1-1-b'],
-                        'c' : req['1-1-c'],
-                        'd' : req['1-1-d'],
-                        'e' : req['1-1-e'],
-                        'f' : req['1-1-f'],
-                        'g': req['1-1-g'],
-                    },
+                            # NILAI MORAL (b)
+                            {
+                                'a' : req['aba'],
+                                'b' : req['abb'],
+                                'c' : req['abc'],
+                            }
+                        ],
 
-                    # KESEHATAN DAN PERILAKU KESELAMATAN (2)
-                    {
-                        'a' : req['1-2-a'],
-                        'b' : req['1-2-b'],
-                        'c' : req['1-2-c'],
-                    }
-                ],
+                        # FISIK MOTORIK (b)
+                        [ 
+                            # MOTORIK KASAR (a)
+                            {
+                                'a' : req['baa'],
+                                'b' : req['bab'],
+                                'c' : req['bac'],
+                                'd' : req['bad'],
+                            },
 
-                # BAHASA (2)
-                [
-                    # RESEPTIF (0)
-                    {
-                        'a' : req['2-0-a'],
-                        'b' : req['2-0-b'],
-                        'c' : req['2-0-c'],
-                        'd' : req['2-0-d'],
-                    },
+                            # MOTORIK HALUS (b)
+                            {
+                                'a' : req['bba'],
+                                'b' : req['bbb'],
+                                'c' : req['bbc'],
+                                'd' : req['bbd'],
+                                'e' : req['bbe'],
+                                'f' : req['bbf'],
+                                'g' : req['bbg'],
+                            },
 
-                    # EKSPRESIF (1)
-                    {
-                        'a' : req['2-1-a'],
-                        'b' : req['2-1-b'],
-                        'c' : req['2-1-c'],
-                        'd' : req['2-1-d'],
-                        'e' : req['2-1-e'],
-                        'f' : req['2-1-f'],
-                        'g' : req['2-1-g'],
-                    },
+                            # KESEHATAN DAN PERILAKU KESELAMATAN (c)
+                            {
+                                'a' : req['bca'],
+                                'b' : req['bcb'],
+                                'c' : req['bcc'],
+                            }
+                        ],
 
-                    # LITERASI (2)
-                    {
-                        'a' : req['2-2-a'],
-                        'b' : req['2-2-b'],
-                        'c' : req['2-2-c'],
-                        'd' : req['2-2-d'],
-                        'e' : req['2-2-e'],
-                        'f' : req['2-2-f'],
-                    }
-                ],
+                        # BAHASA (c)
+                        [
+                            # RESEPTIF (a)
+                            {
+                                'a' : req['caa'],
+                                'b' : req['cab'],
+                                'c' : req['cac'],
+                                'd' : req['cad'],
+                            },
 
-                # KOGNITIF (3)
-                [
-                    # BELAJAR DAN PEMECAHAN MASALAH (0)
-                    {
-                        'a' : req['3-0-a'],
-                        'b' : req['3-0-b'],
-                        'c' : req['3-0-c'],
-                    },
+                            # EKSPRESIF (b)
+                            {
+                                'a' : req['cba'],
+                                'b' : req['cbb'],
+                                'c' : req['cbc'],
+                                'd' : req['cbd'],
+                                'e' : req['cbe'],
+                                'f' : req['cbf'],
+                                'g' : req['cbg'],
+                            },
 
-                    # BERPIKIR LOGIS (1)
-                    {
-                        'a' : req['3-1-a'],
-                        'b' : req['3-1-b'],
-                        'c' : req['3-1-c'],
-                        'd' : req['3-1-d'],
-                        'e' : req['3-1-e'],
-                        'f' : req['3-1-f'],
-                    },
+                            # LITERASI (c)
+                            {
+                                'a' : req['cca'],
+                                'b' : req['ccb'],
+                                'c' : req['ccc'],
+                                'd' : req['ccd'],
+                                'e' : req['cce'],
+                                'f' : req['ccf'],
+                            }
+                        ],
 
-                    # BERPIKIR SIMBOLIK (MATEMATIKA SEDERHANA) (2)
-                    {
-                        'a' : req['3-2-a'],
-                        'b' : req['3-2-b'],
-                        'c' : req['3-2-c'],
-                        'd' : req['3-2-d'],
-                    }
-                ],
+                        # KOGNITIF (3)
+                        [
+                            # BELAJAR DAN PEMECAHAN MASALAH (a)
+                            {
+                                'a' : req['daa'],
+                                'b' : req['dab'],
+                                'c' : req['dac'],
+                            },
 
-                # SOSIAL EMOSIONAL (4)
-                [
-                    # KESADARAN DIRI (0)
-                    {
-                        'a' : req['4-0-a'],
-                        'b' : req['4-0-b'],
-                        'c' : req['4-0-c'],
-                    },
+                            # BERPIKIR LOGIS (b)
+                            {
+                                'a' : req['dba'],
+                                'b' : req['dbb'],
+                                'c' : req['dbc'],
+                                'd' : req['dbd'],
+                                'e' : req['dbe'],
+                                'f' : req['dbf'],
+                            },
 
-                    # RASA TANGGUNG JAWAB KEPADA DIRI SENDIRI DAN ORANG LAIN (1)
-                    {
-                        'a' : req['4-1-a'],
-                        'b' : req['4-1-b'],
-                        'c' : req['4-1-c'],
-                        'd' : req['4-1-d'],
-                    },
+                            # BERPIKIR SIMBOLIK (MATEMATIKA SEDERHANA) (c)
+                            {
+                                'a' : req['dca'],
+                                'b' : req['dcb'],
+                                'c' : req['dcc'],
+                                'd' : req['dcd'],
+                            }
+                        ],
 
-                    #  PERILAKU PROSOSIAL (2)
-                    {
-                        'a' : req['4-2-a'],
-                        'b' : req['4-2-b'],
-                        'c' : req['4-2-c'],
-                        'd' : req['4-2-d'],
-                        'e' : req['4-2-e'],
-                        'f' : req['4-2-f'],
-                        'g' : req['4-2-g'],
-                        'h' : req['4-2-h'],
-                        'i' : req['4-2-i'],
-                    }
-                ],
+                        # SOSIAL EMOSIONAL (e)
+                        [
+                            # KESADARAN DIRI (a)
+                            {
+                                'a' : req['eaa'],
+                                'b' : req['eab'],
+                                'c' : req['eac'],
+                            },
 
-                # SENI (5)
-                [
-                    # subpenilaian (0)
-                    {
-                        'a' : req['5-0-a'],
-                        'b' : req['5-0-b'],
-                        'c' : req['5-0-c'],
-                        'd' : req['5-0-d'],
-                        'e' : req['5-0-e'],
-                        'f' : req['5-0-f'],
-                    }
-                ],
+                            # RASA TANGGUNG JAWAB KEPADA DIRI SENDIRI DAN ORANG LAIN (b)
+                            {
+                                'a' : req['eba'],
+                                'b' : req['ebb'],
+                                'c' : req['ebc'],
+                                'd' : req['ebd'],
+                            },
 
-                # INFORMASI PERKEMBANGAN (dengan textarea) (6)
-                [
-                    # subpenilaian (0)
-                    {
-                        '1' : req['6-0-1'],
-                        '2' : req['6-0-2'],
-                        '3' : req['6-0-3'],
-                        '4' : req['6-0-4'],
-                        '5' : req['6-0-5'],
-                        '6' : req['6-0-6'],
-                    }
-                ]
-            ]
-        }}
+                            #  PERILAKU PROSOSIAL (c)
+                            {
+                                'a' : req['eca'],
+                                'b' : req['ecb'],
+                                'c' : req['ecc'],
+                                'd' : req['ecd'],
+                                'e' : req['ece'],
+                                'f' : req['ecf'],
+                                'g' : req['ecg'],
+                                'h' : req['ech'],
+                                'i' : req['eci'],
+                            }
+                        ],
+
+                        # SENI (f)
+                        [
+                            # subpenilaian (a)
+                            {
+                                'a' : req['faa'],
+                                'b' : req['fab'],
+                                'c' : req['fac'],
+                                'd' : req['fad'],
+                                'e' : req['fae'],
+                                'f' : req['faf'],
+                            }
+                        ],
+
+                        # INFORMASI PERKEMBANGAN (dengan textarea) (g)
+                        [
+                            # subpenilaian (a)
+                            {
+                                'text1' : req['text1'],
+                                'text2' : req['text2'],
+                                'text3' : req['text3'],
+                                'text4' : req['text4'],
+                                'text5' : req['text5'],
+                                'text6' : req['text6'],
+                            }
+                        ]
+                    ]
+            }
+        }
 
         update_rapor(filter,newvalues)
         return {"Success" : True, "msg" : "rapor successfully updated"}
 
-api.add_resource(RaporDetail, "/API/rapor/detail/<rapor_id>")
+api.add_resource(RaporDetail, "/API/rapor/detail/<student_id>/<periode>/<semester>")

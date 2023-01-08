@@ -152,7 +152,7 @@ def insert_rapor(data):
 
 def get_rapor(filter = {}):
     collection = get_collection('rapor')
-    collection.find(filter)
+    return collection.find(filter)
 
 def update_rapor(filter,newvalues):
     collection = get_collection('rapor')
