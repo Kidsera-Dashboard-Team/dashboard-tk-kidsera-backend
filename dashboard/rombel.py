@@ -68,7 +68,7 @@ class Rombels(Resource):
         # email = get_jwt_identity()
         # userDetail = get_user({"email":email})
         # if userDetail['is_admin']:
-        req = request.form
+        req = request.get_json()
         data = {
             "tahun_ajaran" : req['tahun_ajaran'],
             "kelas" : req['kelas'],
@@ -80,3 +80,45 @@ class Rombels(Resource):
         #     return {"Success" : False, "msg" : "Only admin can perform this action"}
 
 api.add_resource(Rombels, "/API/rombel")
+
+class Rombelget(Resource):
+    def get(self, year, classes):
+        yearFormat = '/'.join(year.split('-'))
+        filter = {"tahun_ajaran":yearFormat, "kelas":classes}
+
+        rombel = get_rombel(filter)
+
+        filter_siswa = {"tahun_ajaran" : yearFormat, "tingkat_kelas" : classes}
+        filter_tendik = {"tahun_ajaran" : yearFormat, "kelas_mengajar" : classes}
+
+        list_siswa = json.loads(dumps(getAll_student(filter_siswa)))
+        wali_kelas = json.loads(dumps(get_tendik(filter_tendik)))
+
+        data = {"list_siswa" : list_siswa, "wali_kelas" : wali_kelas,"rombel":rombel}
+        
+        return json.loads(dumps(data)) 
+
+    
+    def put(self, year, classes):
+        yearFormat = '/'.join(year.split('-'))
+        filter = {"tahun_ajaran":yearFormat, "kelas":classes}
+        rombel = get_rombel(filter)
+
+        if get_rombel(filter) is None: 
+            return {"Success" : False, "msg" : "Id not valid"}
+        else:
+            req = request.form
+            new_val = {
+                "$set":{
+                    "tahun_ajaran" : req['tahun_ajaran'],
+                    "kelas" : req['kelas'],
+                    "ruangan" : req['ruangan'],
+                }
+            }
+            update_rombel(filter, new_val)
+            return {"Success" : True, "msg" : "Data has been updated"}
+        
+
+api.add_resource(Rombelget, "/API/rombel/<year>/<classes>")
+
+        
