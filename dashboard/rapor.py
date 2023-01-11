@@ -5,7 +5,7 @@ from flask_restful import Api, Resource
 from flask_jwt_extended import *
 from bson.objectid import ObjectId
 
-from .db import insert_rapor, update_rapor, get_rapor, get_student
+from .db import insert_rapor, update_rapor, get_rapor, get_student, get_user, delete_rapor
 
 bp = Blueprint('rapor', __name__)
 api = Api(bp)
@@ -435,5 +435,19 @@ class RaporDetail(Resource):
 
         update_rapor(filter,newvalues)
         return {"Success" : True, "msg" : "rapor successfully updated"}
+
+
+    @jwt_required()
+    def delete(self, student_id, periode, semester):
+        user = get_jwt_identity()
+        userDetail = get_user({"username":user})
+        if userDetail['is_admin']:
+            ObjInstance = ObjectId(student_id)
+            filter = {"student_id":ObjInstance, "periode":periode, "semester":semester}
+            delete_rapor(filter)
+            print(filter)
+            return{"success":True}
+        else:
+            return{"success":False, "msg":"only admin can perform this action"}
 
 api.add_resource(RaporDetail, "/API/rapor/detail/<student_id>/<periode>/<semester>")
