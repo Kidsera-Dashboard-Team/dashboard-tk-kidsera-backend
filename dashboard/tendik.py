@@ -10,12 +10,12 @@ bp = Blueprint('tendik', __name__)
 api = Api(bp)
 
 class Guru_list(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self):
         data = get_tendiks({'status':'guru'})
         return json.loads(dumps(data))
     
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
@@ -44,14 +44,14 @@ class Guru_list(Resource):
 api.add_resource(Guru_list,'/API/tendik/guru')
 
 class Tendik(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self, tendik_id):
         ObjInstance = ObjectId(tendik_id)
         filter = {'_id':ObjInstance}
         data = get_tendik(filter)
         return json.loads(dumps(data))
     
-    @jwt_required()
+    #@jwt_required()
     def put(self, tendik_id):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
@@ -76,7 +76,7 @@ class Tendik(Resource):
         else:
             return{"success":False, "msg":"only admin can perform this action"}
 
-    @jwt_required()
+    #@jwt_required()
     def delete(self, tendik_id):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
@@ -91,12 +91,12 @@ class Tendik(Resource):
 api.add_resource(Tendik,'/API/tendik/<tendik_id>')
 
 class NonGuru_list(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self):
         data = get_tendiks({'status':'non-guru'})
         return json.loads(dumps(data))
     
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})

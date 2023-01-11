@@ -10,12 +10,12 @@ bp = Blueprint("ruangan",__name__)
 api = Api(bp)
 
 class RuanganList(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self):
         data = get_ruangans()
         return json.loads(dumps(data))
 
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})

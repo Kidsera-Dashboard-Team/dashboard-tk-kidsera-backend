@@ -10,7 +10,7 @@ bp = Blueprint("sarpras", __name__)
 api = Api(bp)
 
 class Sarpras(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self, ruangan_id):
         ObjInstance = ObjectId(ruangan_id)
         ruang = get_ruangan({'_id':ObjInstance})
@@ -19,7 +19,7 @@ class Sarpras(Resource):
         return {"nama_ruangan": ruang['nama_ruangan'],
                 "sarpras": json.loads(dumps(data))}
     
-    @jwt_required()
+    #@jwt_required()
     def post(self, ruangan_id):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
@@ -43,14 +43,14 @@ class Sarpras(Resource):
 api.add_resource(Sarpras,"/API/sarpras/<ruangan_id>")
 
 class SarprasDetail(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self, sarpras_id):
         ObjInstance = ObjectId(sarpras_id)
         filter = {"_id":ObjInstance}
         data = get_sarpras(filter)
         return json.loads(dumps(data))
 
-    @jwt_required()
+    #@jwt_required()
     def put(self, sarpras_id):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
@@ -68,7 +68,7 @@ class SarprasDetail(Resource):
         else:
             return{"success":False, "msg":"only admin can perform this action"}
 
-    @jwt_required()
+    #@jwt_required()
     def delete(self, sarpras_id):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})

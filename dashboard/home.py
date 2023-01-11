@@ -11,7 +11,7 @@ bp = Blueprint("home",__name__)
 api = Api(bp)
 
 class Home(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self):
         info = get_info()
         siswaLaki = len(list(getAll_student({"jenis_kelamin":"Laki-laki","tahun_ajaran":"2022/2023"})))

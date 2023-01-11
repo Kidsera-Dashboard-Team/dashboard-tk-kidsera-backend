@@ -10,7 +10,7 @@ bp = Blueprint('auth', __name__)
 api = Api(bp)
 
 # class Register(Resource):
-#     @jwt_required()
+#     #@jwt_required()
 #     def post(self):
 #         user = get_jwt_identity()
 #         userDetail = get_user({"username":user})
@@ -58,9 +58,9 @@ api.add_resource(Login,'/API/auth/login')
 
 
 class Logout(Resource):
-    # @jwt_required()
+    # #@jwt_required()
     def delete(self):
-        jti = get_jwt()['jti']
+        # jti = get_jwt()['jti']
         current_time = datetime.datetime.now()
         block_token({'jti':jti, 'created_at':current_time})
         return {'success': True, 'msg':'logout success'}
@@ -69,7 +69,7 @@ class Logout(Resource):
 api.add_resource(Logout,'/API/auth/logout')
 
 class CreateAdmin(Resource):
-    # @jwt_required()
+    # #@jwt_required()
     def post(self):
         req = request.get_json()
         user = get_jwt_identity()

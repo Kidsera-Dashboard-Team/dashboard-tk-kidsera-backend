@@ -11,7 +11,7 @@ bp = Blueprint('rapor', __name__)
 api = Api(bp)
 
 class Rapor(Resource):
-    @jwt_required()
+    #@jwt_required()
     def post(self, student_id):
         req = request.get_json()
         id = ObjectId(student_id)
@@ -219,7 +219,7 @@ class Rapor(Resource):
         insert_rapor(data)
         return {"Success" : True, "msg" : "rapor successfully added", "inserted_data" : json.loads(dumps(data))}
 
-    @jwt_required()
+    #@jwt_required()
     def get(self, student_id):
         ObjInstance = ObjectId(student_id)
         student = get_student({"_id":ObjInstance})
@@ -238,7 +238,7 @@ class RaporDetail(Resource):
         data =  {"nama_peserta_didik":student, "rapor":json.loads(dumps(rapor))}
         return json.loads(dumps(data)) 
 
-    @jwt_required()
+    #@jwt_required()
     def put(self, student_id, periode, semester):
         ObjInstance = ObjectId(student_id)
         filter = {"student_id":ObjInstance, "periode":periode, "semester":semester}
@@ -437,7 +437,7 @@ class RaporDetail(Resource):
         return {"Success" : True, "msg" : "rapor successfully updated"}
 
 
-    @jwt_required()
+    #@jwt_required()
     def delete(self, student_id, periode, semester):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
