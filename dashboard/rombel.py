@@ -10,7 +10,7 @@ bp = Blueprint('rombel', __name__)
 api = Api(bp)
 
 class Rombel(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self, rombel_id):
         id = ObjectId(rombel_id)
         rombel = get_rombel(id)
@@ -28,7 +28,7 @@ class Rombel(Resource):
         data = {"list_siswa" : list_siswa, "wali_kelas" : wali_kelas, "ruangan" : ruangan}
         return data
 
-    @jwt_required()
+    #@jwt_required()
     def put(self, rombel_id):
         user = get_jwt_identity()
         userDetail = get_user({"username":user})
@@ -55,7 +55,7 @@ class Rombel(Resource):
 api.add_resource(Rombel, "/API/rombel/<rombel_id>")
 
 class Rombels(Resource):
-    @jwt_required()
+    #@jwt_required()
     def get(self):
         data = get_tahun_ajaran()
         datas = [x['tahun_ajaran'] for x in data]
@@ -63,7 +63,7 @@ class Rombels(Resource):
         datas1.sort()
         return json.loads(dumps(datas1)) 
 
-    @jwt_required()
+    #@jwt_required()
     def post(self):
         # email = get_jwt_identity()
         # userDetail = get_user({"email":email})
