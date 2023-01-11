@@ -158,6 +158,10 @@ def update_rapor(filter,newvalues):
     collection = get_collection('rapor')
     collection.update_one(filter, newvalues)
 
+def delete_rapor(filter = {}):
+    collection = get_collection("rapor")
+    return collection.delete_one(filter)
+
 #for info
 def get_info():
     collection = get_collection('info')
